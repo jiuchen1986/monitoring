@@ -1,7 +1,7 @@
 - block:
   - name: go through the list of secrets
     include_tasks: create_secret.yaml
-    with_items: {{ prom_item.secrets }}
+    with_items: "{{ prom_item.secrets }}"
     loop_control:
       loop_var: secret_item
       
