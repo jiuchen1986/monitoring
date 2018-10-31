@@ -1,9 +1,9 @@
 [all]
-10.210.55.251
-10.210.55.252
-10.210.55.253
-10.210.55.254
+node1 ansible_host=10.210.xxx.xxx hostname=xxx
+
 
 [master]
-10.210.55.251
+node1
 
+[etcd]
+node1
