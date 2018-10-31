@@ -5,6 +5,8 @@ metadata:
     prometheus: k8s
   name: k8s
 spec:
+  externalLabels:
+    cluster: {{ cluster_name }}
   tolerations:
   - key: node-role.kubernetes.io/master
     effect: NoSchedule
