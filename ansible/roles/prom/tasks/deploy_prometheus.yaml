@@ -4,7 +4,13 @@
     with_items: "{{ prom_item.secrets }}"
     loop_control:
       loop_var: secret_item
-      
+  
+  - name: create director for prometheus instance manifests
+    file:
+      path: "/root/monitoring/prometheus/{{ prom_item.name }}"
+      state: directory
+      mode: 0755     
+  
   - name: copy clusterrole manifest for prometheus instance
     template:
       src: prometheus/{{ prom_item.name }}/prometheus-clusterRole.yaml.tpl

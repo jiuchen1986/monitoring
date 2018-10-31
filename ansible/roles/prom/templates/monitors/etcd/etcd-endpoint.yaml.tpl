@@ -7,7 +7,7 @@ metadata:
   namespace: {{ monitor_item.namespace | default(deploy_namespace) }}
 subsets:
 - addresses:
-{% for host in group['etcd'] %}
+{% for host in groups['etcd'] %}
   - ip: {{ hostvars[host]['ansible_host'] }}
 {% endfor %}
   ports:

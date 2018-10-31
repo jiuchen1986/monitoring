@@ -1,4 +1,11 @@
 - block:
+
+  - name: create director for monitor manifests
+    file:
+      path: "/root/monitoring/monitors/{{ monitor_item.name }}"
+      state: directory
+      mode: 0755
+      
   - name: copy service manifest for service monitor
     template:
       src: monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-service.yaml.tpl
