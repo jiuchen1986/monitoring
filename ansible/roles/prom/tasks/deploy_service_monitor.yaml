@@ -1,0 +1,28 @@
+- block:
+  - name: copy service manifest for service monitor
+    template:
+      src: monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-service.yaml.tpl
+      dest: /root/monitoring/monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-service.yaml
+  
+  - name: deploy service for service monitor
+    shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} -n {{ monitor_item.namespace | default(deploy_namespace) }} apply -f /root/monitoring/monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-service.yaml"
+  
+  - name: copy endpoint manifest for service monitor
+    template:
+      src: monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-endpoint.yaml.tpl
+      dest: /root/monitoring/monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-endpoint.yaml
+    when: monitor_item.endpoint
+  
+  - name: deploy service for service monitor
+    shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} -n {{ monitor_item.namespace | default(deploy_namespace) }} apply -f /root/monitoring/monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-endpoint.yaml"
+    when: monitor_item.endpoint
+    
+  - name: copy monitor manifest for service monitor
+    template:
+      src: monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-serviceMonitor.yaml.tpl
+      dest: /root/monitoring/monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-serviceMonitor.yaml
+  
+  - name: deploy service for service monitor
+    shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} -n {{ monitor_item.namespace | default(deploy_namespace) }} apply -f /root/monitoring/monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-serviceMonitor.yaml"
+
+  when: inventory_hostname == groups['master'][0]

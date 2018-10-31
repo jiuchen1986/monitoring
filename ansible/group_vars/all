@@ -1,0 +1,27 @@
+ansible_ssh_user: sre
+ansible_ssh_pass: sre
+ansible_become_pass: sre
+
+node_exporter_version: 0.16.0
+
+kubectl_path: /usr/local/bin
+kubeconfig_file: /etc/kubernetes/admin.conf
+
+deploy_namespace: monitoring
+
+etcd_ca_file: /etc/kubernetes/etcd/master-ca.crt
+etcd_client_cert_file: /etc/kubernetes/etcd/master-client.crt
+etcd_client_key_file: /etc/kubernetes/etcd/master-client.key
+
+prometheus_list:
+- name: prometheus_etcd
+  node_port: 30900
+  secrets:
+  - name: etcd-certs
+    creation: "--from-file=etcd-ca.crt={{ etcd_ca_file }} \
+               --from-file=master.etcd-client.crt={{ etcd_client_cert_file }} \
+               --from-file=master.etcd-client.key={{ etcd_client_key_file }}"
+
+monitoring_services:
+- name: etcd
+  endpoint: yes

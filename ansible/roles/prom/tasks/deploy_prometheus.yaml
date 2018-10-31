@@ -1,0 +1,51 @@
+- block:
+  - name: go through the list of secrets
+    include_tasks: create_secret.yaml
+    with_items: {{ prom_item.secrets }}
+    loop_control:
+      loop_var: secret_item
+      
+  - name: copy clusterrole manifest for prometheus instance
+    template:
+      src: prometheus/{{ prom_item.name }}/prometheus-clusterRole.yaml.tpl
+      dest: /root/monitoring/prometheus/{{ prom_item.name }}/prometheus-clusterRole.yaml
+
+  - name: copy clusterrolebinding manifest for prometheus instance
+    template:
+      src: prometheus/{{ prom_item.name }}/prometheus-clusterRoleBinding.yaml.tpl
+      dest: /root/monitoring/prometheus/{{ prom_item.name }}/prometheus-clusterRoleBinding.yaml
+  
+  - name: copy prometheus manifest for prometheus instance
+    template:
+      src: prometheus/{{ prom_item.name }}/prometheus-prometheus.yaml.tpl
+      dest: /root/monitoring/prometheus/{{ prom_item.name }}/prometheus-prometheus.yaml
+  
+  - name: copy rolebindingconfig manifest for prometheus instance
+    template:
+      src: prometheus/{{ prom_item.name }}/prometheus-roleBindingConfig.yaml.tpl
+      dest: /root/monitoring/prometheus/{{ prom_item.name }}/prometheus-roleBindingConfig.yaml
+      
+  - name: copy roleconfig manifest for prometheus instance
+    template:
+      src: prometheus/{{ prom_item.name }}/prometheus-roleConfig.yaml.tpl
+      dest: /root/monitoring/prometheus/{{ prom_item.name }}/prometheus-roleConfig.yaml
+      
+  - name: copy service manifest for prometheus instance
+    template:
+      src: prometheus/{{ prom_item.name }}/prometheus-service.yaml.tpl
+      dest: /root/monitoring/prometheus/{{ prom_item.name }}/prometheus-service.yaml
+      
+  - name: copy serviceaccount manifest for prometheus instance
+    template:
+      src: prometheus/{{ prom_item.name }}/prometheus-serviceAccount.yaml.tpl
+      dest: /root/monitoring/prometheus/{{ prom_item.name }}/prometheus-serviceAccount.yaml
+      
+  - name: copy servicemonitor manifest for prometheus instance
+    template:
+      src: prometheus/{{ prom_item.name }}/prometheus-serviceMonitor.yaml.tpl
+      dest: /root/monitoring/prometheus/{{ prom_item.name }}/prometheus-serviceMonitor.yaml
+  
+  - name: deploy prometheus instance on cluster
+    shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} -n {{ deploy_namespace }} apply -f /root/monitoring/prometheus/{{ prom_item.name }}/"
+
+  when: inventory_hostname == groups['master'][0]
