@@ -1,6 +1,7 @@
 - block:
   - name: undeploy prometheus-operator on cluster
     shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} -n {{ deploy_namespace }} delete -f /root/monitoring/prometheus_operator/manifests/"
+    ignore_errors: yes
 
   - name: remove directory containing manifests for prometheus-operator
     file:

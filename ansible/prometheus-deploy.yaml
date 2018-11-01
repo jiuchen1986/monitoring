@@ -1,5 +1,7 @@
 - hosts: master
   become: yes
+  vars:
+    act: deploy
   roles:
   - prom_operator
   - prom
