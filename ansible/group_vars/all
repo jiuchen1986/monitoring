@@ -1,6 +1,5 @@
-ansible_ssh_user: xxx
-ansible_ssh_pass: xxx
-ansible_become_pass: xxx
+consul_server: xxx
+consul_port: xxx
 
 node_exporter_version: 0.16.0
 
@@ -25,3 +24,7 @@ prometheus_list:
 monitoring_services:
 - name: etcd
   endpoint: yes
+  service: yes
+- name: node-exporter
+  endpoint: yes
+  service: yes

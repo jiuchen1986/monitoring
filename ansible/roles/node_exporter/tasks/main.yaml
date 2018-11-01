@@ -1,6 +1,13 @@
 - name: add prometheus user
   shell: useradd prometheus -s /sbin/nologin
   ignore_errors: yes
+  
+- name: disable node_exporter service if already exists
+  systemd:
+    name: node_exporter
+    state: stoped
+    enabled: no
+  ignore_errors: yes
 
 - name: downlad node_exporter
   unarchive:
