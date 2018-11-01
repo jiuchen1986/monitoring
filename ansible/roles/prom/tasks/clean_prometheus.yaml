@@ -1,0 +1,19 @@
+- block:
+  - name: deregister prometheus target from consul
+    shell: curl -X PUT http://{{ consul_server }}:{{ consul_port }}/v1/agent/service/deregister/{{ cluster_name }}-prom
+
+  - name: undeploy prometheus instance from cluster
+    shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} -n {{ deploy_namespace }} delete -f /root/monitoring/prometheus/{{ prom_item.name }}/"
+
+  - name: remove director containing prometheus instance manifests
+    file:
+      path: "/root/monitoring/prometheus/{{ prom_item.name }}"
+      state: absent
+      
+  - name: go through the list of secrets
+    include_tasks: clean_secret.yaml
+    with_items: "{{ prom_item.secrets }}"
+    loop_control:
+      loop_var: secret_item
+
+  when: inventory_hostname == groups['master'][0]

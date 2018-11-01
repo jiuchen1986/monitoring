@@ -9,7 +9,7 @@
     file:
       path: "/root/monitoring/prometheus/{{ prom_item.name }}"
       state: directory
-      mode: 0755     
+      mode: 0755
   
   - name: copy clusterrole manifest for prometheus instance
     template:
@@ -54,7 +54,7 @@
   - name: deploy prometheus instance on cluster
     shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} -n {{ deploy_namespace }} apply -f /root/monitoring/prometheus/{{ prom_item.name }}/"
     
-  - name: registry prometheus target to consul
+  - name: register prometheus target to consul
     shell: curl -X PUT -d '{"Name": "{{ cluster_name }}-prom", "Address": "{{ ansible_host }}", "Port": "{{ prom_item.node_port }}"}' http://{{ consul_server }}:{{ consul_port }}/v1/agent/service/register
 
   when: inventory_hostname == groups['master'][0]

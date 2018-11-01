@@ -1,0 +1,14 @@
+- block:
+  - name: go through the list of prometheus needs to be deployed
+    include_tasks: deploy_prometheus.yaml
+    with_items: "{{ prometheus_list }}"
+    loop_control:
+      loop_var: prom_item
+      
+  - name: go through the list of service monitor
+    include_tasks: deploy_service_monitor.yaml
+    with_items: "{{ monitoring_services }}"
+    loop_control:
+      loop_var: monitor_item
+
+  when: inventory_hostname == groups['master'][0]

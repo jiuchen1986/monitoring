@@ -1,0 +1,19 @@
+- block:
+  
+  - name: undeploy service of service monitor
+    shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} -n {{ monitor_item.namespace | default(deploy_namespace) }} delete -f /root/monitoring/monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-service.yaml"
+    when: monitor_item.service
+  
+  - name: undeploy service of service monitor
+    shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} -n {{ monitor_item.namespace | default(deploy_namespace) }} delete -f /root/monitoring/monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-endpoint.yaml"
+    when: monitor_item.endpoint
+  
+  - name: undeploy monitor of service monitor
+    shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} -n {{ monitor_item.namespace | default(deploy_namespace) }} delete -f /root/monitoring/monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-serviceMonitor.yaml"
+
+  - name: remove director for monitor manifests
+    file:
+      path: "/root/monitoring/monitors/{{ monitor_item.name }}"
+      state: absent
+
+  when: inventory_hostname == groups['master'][0]
