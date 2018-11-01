@@ -5,7 +5,7 @@
 - name: disable node_exporter service if already exists
   systemd:
     name: node_exporter
-    state: stoped
+    state: stopped
     enabled: no
   ignore_errors: yes
 
