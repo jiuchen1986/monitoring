@@ -56,5 +56,6 @@
     
   - name: register prometheus target to consul
     shell: curl -X PUT -d '{"Name":"{{ cluster_name }}-prom","Address":"{{ ansible_host }}","Port":{{ prom_item.node_port }}}' http://{{ consul_server }}:{{ consul_port }}/v1/agent/service/register
+    ignore_errors: yes
 
   when: inventory_hostname == groups['master'][0]
