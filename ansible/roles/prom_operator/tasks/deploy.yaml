@@ -19,5 +19,9 @@
   
   - name: deploy prometheus-operator on cluster
     shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} -n {{ deploy_namespace }} apply -f /root/monitoring/prometheus_operator/manifests/"
+    register: result
+    until: result is succeeded
+    retires: 10
+    delay: 10
 
   when: inventory_hostname == groups['master'][0]
