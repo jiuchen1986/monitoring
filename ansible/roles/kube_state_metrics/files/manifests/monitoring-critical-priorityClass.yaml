@@ -1,0 +1,6 @@
+apiVersion: scheduling.k8s.io/v1beta1
+description: Used for the workloads of monitoring.
+kind: PriorityClass
+metadata:
+  name: monitoring-system
+value: 20000000
