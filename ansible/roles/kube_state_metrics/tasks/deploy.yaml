@@ -1,0 +1,27 @@
+- block:
+  - name: copy manifest file for kube-state-metrics
+    copy:
+      src: manifests
+      dest: /root/monitoring/kube_state_metrics/
+      owner: root
+      group: root
+      
+  - name: copy clusterrolebinding file for kube-state-metrics with dynamic namespace
+    template:
+      src: kube-state-metrics-clusterRoleBinding.yaml.tpl
+      dest: /root/monitoring/kube-state-metrics/manifests/kube-state-metrics-clusterRoleBinding.yaml
+      owner: root
+      group: root
+
+  - name: create namespace for monitoring staff on cluster
+    shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} create ns {{ deploy_namespace }}"
+    ignore_errors: yes
+  
+  - name: deploy kube-state-metrics on cluster
+    shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} -n {{ deploy_namespace }} apply -f /root/monitoring/kube_state_metrics/manifests/"
+    register: result
+    until: result is succeeded
+    retires: 10
+    delay: 10
+
+  when: inventory_hostname == groups['master'][0]

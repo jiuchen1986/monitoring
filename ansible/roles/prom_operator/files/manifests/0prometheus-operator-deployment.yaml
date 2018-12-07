@@ -30,18 +30,10 @@ spec:
           limits:
             cpu: 200m
             memory: 200Mi
-          requests:
-            cpu: 100m
-            memory: 100Mi
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
-      tolerations:
-      - key: node-role.kubernetes.io/master
-        effect: NoSchedule
-      nodeSelector:
-        beta.kubernetes.io/os: linux
-        node-role.kubernetes.io/master: ""
+      priorityClassName: system-cluster-critical
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534

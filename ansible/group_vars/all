@@ -8,6 +8,8 @@ kubeconfig_file: /etc/kubernetes/admin.conf
 
 deploy_namespace: monitoring
 
+scrape_interval: 30s
+
 etcd_ca_file: /etc/kubernetes/etcd/master-ca.crt
 etcd_client_cert_file: /etc/kubernetes/etcd/master-client.crt
 etcd_client_key_file: /etc/kubernetes/etcd/master-client.key
@@ -25,6 +27,6 @@ monitoring_services:
 - name: etcd
   endpoint: yes
   service: yes
-- name: node-exporter
-  endpoint: yes
-  service: yes
+#- name: node-exporter
+#  endpoint: yes
+#  service: yes

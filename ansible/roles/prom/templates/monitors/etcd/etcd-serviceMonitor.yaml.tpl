@@ -6,7 +6,8 @@ metadata:
   name: etcd-k8s
 spec:
   endpoints:
-  - interval: 30s
+  - interval: {{ scrape_interval }}
+    scrapeTimeout: {{ scrape_interval }}
     port: https-metrics
     scheme: https
     tlsConfig:
@@ -14,6 +15,9 @@ spec:
       certFile: /etc/prometheus/secrets/etcd-certs/master.etcd-client.crt
       keyFile: /etc/prometheus/secrets/etcd-certs/master.etcd-client.key
   jobLabel: component
+  namespaceSelector:
+    matchNames:
+    - {{ monitor_item.namespace | default(deploy_namespace) }}
   selector:
     matchLabels:
       component: etcd

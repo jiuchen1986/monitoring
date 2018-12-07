@@ -7,17 +7,13 @@ metadata:
 spec:
   externalLabels:
     cluster: {{ cluster_name }}
-  tolerations:
-  - key: node-role.kubernetes.io/master
-    effect: NoSchedule
   nodeSelector:
     beta.kubernetes.io/os: linux
-    node-role.kubernetes.io/master: ""
   baseImage: quay.io/prometheus/prometheus
   replicas: 1
   resources:
-    requests:
-      memory: 400Mi
+    limits:
+      memory: 2Gi
 {% if prom_item.secrets | default([]) != [] %}
   secrets:
 {% for sec in prom_item.secrets %}
@@ -27,4 +23,5 @@ spec:
   serviceAccountName: prometheus-k8s
   serviceMonitorNamespaceSelector: {}
   serviceMonitorSelector: {}
-  version: v2.4.3
+  priorityClassName: system-cluster-critical
+  version: v2.5.0

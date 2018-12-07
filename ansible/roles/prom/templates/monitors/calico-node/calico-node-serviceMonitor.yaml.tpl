@@ -2,8 +2,8 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   labels:
-    k8s-app: node-exporter
-  name: node-exporter
+    k8s-app: calico-node
+  name: calico-node
 spec:
   endpoints:
   - interval: {{ scrape_interval }}
@@ -15,4 +15,4 @@ spec:
     - {{ monitor_item.namespace | default(deploy_namespace) }}
   selector:
     matchLabels:
-      k8s-app: node-exporter
+      k8s-app: calico-node
