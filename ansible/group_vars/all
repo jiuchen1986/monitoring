@@ -27,6 +27,15 @@ monitoring_services:
 - name: etcd
   endpoint: yes
   service: yes
+- name: apiserver
+  namespace: default
+- name: kube-state-metrics
+  service: yes
+- name: kubelet
+  namespace: kube-system
+- name: calico-node
+  service: yes
+  namespace: kube-system
 #- name: node-exporter
 #  endpoint: yes
 #  service: yes

@@ -5,7 +5,7 @@
     loop_control:
       loop_var: secret_item
   
-  - name: create director for prometheus instance manifests
+  - name: create directory for prometheus instance manifests
     file:
       path: "/root/monitoring/prometheus/{{ prom_item.name }}"
       state: directory

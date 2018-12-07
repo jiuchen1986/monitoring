@@ -1,0 +1,6 @@
+- hosts: master
+  become: yes
+  vars:
+    act: deploy
+  roles:
+  - kube_state_metrics
