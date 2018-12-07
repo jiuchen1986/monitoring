@@ -1,6 +1,6 @@
 - block:
 
-  - name: create director for monitor manifests
+  - name: create directory for monitor manifests
     file:
       path: "/root/monitoring/monitors/{{ monitor_item.name }}"
       state: directory
