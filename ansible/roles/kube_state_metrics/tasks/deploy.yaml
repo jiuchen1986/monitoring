@@ -9,7 +9,7 @@
   - name: copy clusterrolebinding file for kube-state-metrics with dynamic namespace
     template:
       src: kube-state-metrics-clusterRoleBinding.yaml.tpl
-      dest: /root/monitoring/kube-state-metrics/manifests/kube-state-metrics-clusterRoleBinding.yaml
+      dest: /root/monitoring/kube_state_metrics/manifests/kube-state-metrics-clusterRoleBinding.yaml
       owner: root
       group: root
 
