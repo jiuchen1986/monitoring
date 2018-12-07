@@ -10,21 +10,21 @@
     template:
       src: monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-service.yaml.tpl
       dest: /root/monitoring/monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-service.yaml
-    when: monitor_item.service
+    when: monitor_item.service | default('no') | bool
   
   - name: deploy service for service monitor
     shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} -n {{ monitor_item.namespace | default(deploy_namespace) }} apply -f /root/monitoring/monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-service.yaml"
-    when: monitor_item.service
+    when: monitor_item.service | default('no') | bool
   
   - name: copy endpoint manifest for service monitor
     template:
       src: monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-endpoint.yaml.tpl
       dest: /root/monitoring/monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-endpoint.yaml
-    when: monitor_item.endpoint
+    when: monitor_item.endpoint | default('no') | bool
   
   - name: deploy service for service monitor
     shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} -n {{ monitor_item.namespace | default(deploy_namespace) }} apply -f /root/monitoring/monitors/{{ monitor_item.name }}/{{ monitor_item.name }}-endpoint.yaml"
-    when: monitor_item.endpoint
+    when: monitor_item.endpoint | default('no') | bool
     
   - name: copy monitor manifest for service monitor
     template:
