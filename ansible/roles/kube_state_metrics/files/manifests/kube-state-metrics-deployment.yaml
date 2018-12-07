@@ -16,7 +16,7 @@ spec:
     spec:
       nodeSelector:
         beta.kubernetes.io/os: linux
-      priorityClassName: system-cluster-critical
+      priorityClassName: monitoring-critical
       containers:
       - args:
         - --secure-listen-address=:8443

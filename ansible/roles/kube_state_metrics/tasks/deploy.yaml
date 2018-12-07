@@ -13,6 +13,10 @@
       owner: root
       group: root
 
+  - name: create priority class for monitoring workload
+    shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} create priorityclass monitoring-critical --value=100000000 --description=\"monitoring workload priority\""
+    ignore_errors: yes
+  
   - name: create namespace for monitoring staff on cluster
     shell: "{{ kubectl_path }}/kubectl --kubeconfig {{ kubeconfig_file }} create ns {{ deploy_namespace }}"
     ignore_errors: yes

@@ -33,7 +33,7 @@ spec:
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
-      priorityClassName: system-cluster-critical
+      priorityClassName: monitoring-critical
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534

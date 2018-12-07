@@ -23,5 +23,5 @@ spec:
   serviceAccountName: prometheus-k8s
   serviceMonitorNamespaceSelector: {}
   serviceMonitorSelector: {}
-  priorityClassName: system-cluster-critical
+  priorityClassName: monitoring-critical
   version: v2.5.0
