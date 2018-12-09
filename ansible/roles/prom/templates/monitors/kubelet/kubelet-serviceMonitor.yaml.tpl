@@ -6,21 +6,15 @@ metadata:
   name: kubelet
 spec:
   endpoints:
-  - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-    honorLabels: true
+  - honorLabels: true
     interval: {{ scrape_interval }}
-    port: https-metrics
-    scheme: https
-    tlsConfig:
-      insecureSkipVerify: true
-  - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-    honorLabels: true
+    port: http-metrics
+    scheme: http
+  - honorLabels: true
     interval: {{ scrape_interval }}
     path: /metrics/cadvisor
-    port: https-metrics
-    scheme: https
-    tlsConfig:
-      insecureSkipVerify: true
+    port: http-metrics
+    scheme: http
   jobLabel: k8s-app
   namespaceSelector:
     matchNames:
