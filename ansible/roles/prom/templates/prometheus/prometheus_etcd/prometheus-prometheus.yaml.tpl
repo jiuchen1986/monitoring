@@ -14,6 +14,7 @@ spec:
   resources:
     limits:
       memory: 2Gi
+      cpu: 1000m
 {% if prom_item.secrets | default([]) != [] %}
   secrets:
 {% for sec in prom_item.secrets %}
