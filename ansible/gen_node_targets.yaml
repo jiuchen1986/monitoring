@@ -1,5 +1,4 @@
-- host: localhost
-  connection: local
+- hosts: ingress_lb
   tasks:
   - name: generate node targets for kaas
     template:
