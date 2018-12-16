@@ -13,6 +13,9 @@
     enabled: no
   ignore_errors: yes
 
+- name: update yum
+  shell: yum update -y
+
 - name: install node_exporter by yum
   yum:
     name: node_exporter
