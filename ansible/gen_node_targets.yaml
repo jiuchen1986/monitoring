@@ -1,0 +1,10 @@
+- host: localhost
+  connection: local
+  tasks:
+  - name: generate node targets for kaas
+    template:
+      src: node_targets.yaml.tpl
+      dest: /home/sre/{{ cluster_name }}.yml
+      owner: sre
+      group: sre
+      mode: 0644
