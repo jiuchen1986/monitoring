@@ -1,4 +1,5 @@
 - hosts: all
   become: yes
   roles:
-  - node_exporter
+  #- node_exporter
+  - node_exporter_yum

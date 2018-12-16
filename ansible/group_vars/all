@@ -36,6 +36,6 @@ monitoring_services:
 - name: calico-node
   service: yes
   namespace: kube-system
-#- name: node-exporter
-#  endpoint: yes
-#  service: yes
+- name: node-exporter
+  endpoint: yes
+  service: yes

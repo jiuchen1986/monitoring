@@ -1,0 +1,42 @@
+- name: copy prometheus repo file
+  copy:
+    src: prometheus.repo
+    dest: /etc/yum.repos.d/prometheus.repo
+    owner: root
+    group: root
+    mode: 0644
+
+- name: disable node_exporter service if already exists
+  systemd:
+    name: node_exporter
+    state: stopped
+    enabled: no
+  ignore_errors: yes
+
+- name: install node_exporter by yum
+  yum:
+    name: node_exporter
+    state: present
+
+- name: add node_exporter service file
+  copy:
+    src: node_exporter.service
+    dest: /etc/systemd/system/node_exporter.service
+    owner: root
+    group: root
+    mode: 0644
+
+# - name: copy env file for node_exporter service
+  # copy:
+    # src: node_exporter
+    # dest: /etc/default/node_exporter
+    # owner: root
+    # group: root
+    # mode: 0644
+
+- name: start node_exporter's service
+  systemd:
+    name: node_exporter
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
