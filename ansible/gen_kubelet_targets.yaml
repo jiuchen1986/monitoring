@@ -1,0 +1,13 @@
+- hosts: ingress_lb
+  tasks:
+  - name: generate dir for kubelet targets
+    file:
+      path: /home/sre/kubelet
+      state: directory
+  - name: generate kubelet targets for kaas
+    template:
+      src: kubelet_targets.yaml.tpl
+      dest: /home/sre/kubelet/{{ cluster_name }}.yml
+      owner: sre
+      group: sre
+      mode: 0644

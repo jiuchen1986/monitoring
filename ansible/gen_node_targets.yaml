@@ -1,9 +1,13 @@
 - hosts: ingress_lb
   tasks:
+  - name: generate dir for node targets
+    file:
+      path: /home/sre/node
+      state: directory
   - name: generate node targets for kaas
     template:
       src: node_targets.yaml.tpl
-      dest: /home/sre/{{ cluster_name }}.yml
+      dest: /home/sre/node/{{ cluster_name }}.yml
       owner: sre
       group: sre
       mode: 0644

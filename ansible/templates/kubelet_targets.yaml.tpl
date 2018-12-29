@@ -1,6 +1,6 @@
 - targets:
 {% for host in groups['ingress_lb'] %}
-  - {{ hostvars[host]['ansible_host'] }}:9100
+  - {{ hostvars[host]['ansible_host'] }}:10255
 {% endfor %}
   labels:
     job: '{{ cluster_name }}'
@@ -9,7 +9,7 @@
 
 - targets:
 {% for host in groups['master'] %}
-  - {{ hostvars[host]['ansible_host'] }}:9100
+  - {{ hostvars[host]['ansible_host'] }}:10255
 {% endfor %}
   labels:
     job: '{{ cluster_name }}'
@@ -18,7 +18,7 @@
 
 - targets:
 {% for host in groups['worker'] %}
-  - {{ hostvars[host]['ansible_host'] }}:9100
+  - {{ hostvars[host]['ansible_host'] }}:10255
 {% endfor %}
   labels:
     job: '{{ cluster_name }}'
