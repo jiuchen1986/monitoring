@@ -29,13 +29,13 @@
     group: root
     mode: 0644
 
-# - name: copy env file for node_exporter service
-  # copy:
-    # src: node_exporter
-    # dest: /etc/default/node_exporter
-    # owner: root
-    # group: root
-    # mode: 0644
+- name: copy env file for node_exporter service
+  copy:
+    src: node_exporter
+    dest: /etc/default/node_exporter
+    owner: root
+    group: root
+    mode: 0644
 
 - name: start node_exporter's service
   systemd:
