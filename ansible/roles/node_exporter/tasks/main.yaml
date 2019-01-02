@@ -9,13 +9,13 @@
     enabled: no
   ignore_errors: yes
 
-- name: downlad node_exporter
+- name: download node_exporter
   unarchive:
     src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
     dest: /usr/local
     remote_src: yes
 
-- name: copy binary to /usr/bin
+- name: copy node_exporter binary to /usr/bin
   copy:
     src: /usr/local/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter
     dest: /usr/bin
